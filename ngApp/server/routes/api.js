@@ -10,7 +10,7 @@ mongoose.connect(db, (err) => {
     if(err){
         console.log("Error in connecting to mongodb");
     }
-}) 
+})
 
 
 router.get('/videos',(req,res)=>{
@@ -83,6 +83,22 @@ router.put('/video/:id', (req, res) => {
         }
     );
 });
+
+router.delete('/video/:id', (req, res) => {
+    console.log("DELETING video by id");
+    Video.findByIdAndRemove(
+        req.params.id,
+        (err,deletedVideo) => {
+            if(err){
+                console.log("Error deleting vide");
+                res.json(err);
+            } else {
+                res.json(deletedVideo);
+            }
+        }
+    );
+
+})
 
 
 module.exports = router;
